@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(bun:*)",
+      "Bash([ -f package.json ])",
+      "Bash([ -f .gitignore ])",
+      "Bash(bunx shadcn@latest add:*)",
+      "Bash(bunx prisma init:*)",
+      "Bash(bunx prisma generate:*)",
+      "Bash([ -f src/lib/prisma.ts ])"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

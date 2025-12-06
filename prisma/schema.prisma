@@ -1,0 +1,267 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                String   @id @default(cuid())
+  clerkId           String   @unique
+  email             String   @unique
+  firstName         String?
+  lastName          String?
+  imageUrl          String?
+  phone             String?
+  role              UserRole @default(ESTATE_OWNER)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  estates           EstateOwnership[]
+  serviceProvider   ServiceProvider?
+  reviews           Review[]
+  bookings          Booking[]
+
+  @@index([clerkId])
+  @@index([email])
+}
+
+enum UserRole {
+  ESTATE_OWNER
+  SERVICE_PROVIDER
+  ADMIN
+}
+
+model Estate {
+  id                String   @id @default(cuid())
+  name              String
+  slug              String   @unique
+  address           String
+  city              String
+  province          Province
+  postalCode        String
+
+  description       String?  @db.Text
+  imageUrl          String?
+  totalUnits        Int?
+
+  verified          Boolean  @default(false)
+  active            Boolean  @default(true)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  owners            EstateOwnership[]
+  verifiedProviders ProviderVerification[]
+
+  @@index([slug])
+  @@index([city])
+  @@index([province])
+}
+
+enum Province {
+  GAUTENG
+  WESTERN_CAPE
+  KWAZULU_NATAL
+  EASTERN_CAPE
+  FREE_STATE
+  LIMPOPO
+  MPUMALANGA
+  NORTH_WEST
+  NORTHERN_CAPE
+}
+
+model EstateOwnership {
+  id        String   @id @default(cuid())
+  userId    String
+  estateId  String
+
+  verified  Boolean  @default(false)
+  role      EstateRole @default(RESIDENT)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  estate    Estate   @relation(fields: [estateId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, estateId])
+  @@index([userId])
+  @@index([estateId])
+}
+
+enum EstateRole {
+  RESIDENT
+  TRUSTEE
+  MANAGER
+}
+
+model ServiceProvider {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+
+  businessName      String
+  slug              String   @unique
+  description       String   @db.Text
+  logo              String?
+
+  registrationNumber String?
+  taxNumber         String?
+  yearsInBusiness   Int?
+
+  phone             String
+  email             String
+  website           String?
+
+  serviceRadius     Int?
+  servicesOffered   String[]
+
+  verified          Boolean  @default(false)
+  verifiedAt        DateTime?
+
+  averageRating     Float    @default(0)
+  totalReviews      Int      @default(0)
+  totalBookings     Int      @default(0)
+
+  active            Boolean  @default(true)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categories        ProviderCategory[]
+  verifications     ProviderVerification[]
+  reviews           Review[]
+  bookings          Booking[]
+  gallery           ProviderGallery[]
+
+  @@index([slug])
+  @@index([verified])
+  @@index([averageRating])
+}
+
+model ServiceCategory {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?  @db.Text
+  icon        String?
+
+  active      Boolean  @default(true)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  providers   ProviderCategory[]
+
+  @@index([slug])
+}
+
+model ProviderCategory {
+  id                 String   @id @default(cuid())
+  serviceProviderId  String
+  categoryId         String
+
+  createdAt          DateTime @default(now())
+
+  provider           ServiceProvider @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+  category           ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceProviderId, categoryId])
+  @@index([serviceProviderId])
+  @@index([categoryId])
+}
+
+model ProviderVerification {
+  id                 String   @id @default(cuid())
+  serviceProviderId  String
+  estateId           String
+
+  verified           Boolean  @default(true)
+  notes              String?  @db.Text
+
+  verifiedBy         String?
+  verifiedAt         DateTime @default(now())
+
+  provider           ServiceProvider @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+  estate             Estate   @relation(fields: [estateId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceProviderId, estateId])
+  @@index([serviceProviderId])
+  @@index([estateId])
+}
+
+model Review {
+  id                 String   @id @default(cuid())
+  serviceProviderId  String
+  userId             String
+
+  rating             Int
+  comment            String?  @db.Text
+
+  serviceQuality     Int?
+  professionalism    Int?
+  valueForMoney      Int?
+  punctuality        Int?
+
+  verified           Boolean  @default(false)
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  provider           ServiceProvider @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([serviceProviderId])
+  @@index([userId])
+  @@index([rating])
+}
+
+model ProviderGallery {
+  id                 String   @id @default(cuid())
+  serviceProviderId  String
+
+  imageUrl           String
+  caption            String?
+  order              Int      @default(0)
+
+  createdAt          DateTime @default(now())
+
+  provider           ServiceProvider @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+
+  @@index([serviceProviderId])
+}
+
+model Booking {
+  id                 String   @id @default(cuid())
+  serviceProviderId  String
+  userId             String
+
+  title              String
+  description        String   @db.Text
+
+  status             BookingStatus @default(PENDING)
+
+  scheduledDate      DateTime?
+  completedDate      DateTime?
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  provider           ServiceProvider @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([serviceProviderId])
+  @@index([userId])
+  @@index([status])
+}
+
+enum BookingStatus {
+  PENDING
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
