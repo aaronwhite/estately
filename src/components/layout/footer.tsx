@@ -8,7 +8,7 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-bold mb-4">Estately</h3>
             <p className="text-sm text-muted-foreground">
-              South Africa's trusted platform for estate-verified service providers
+              South Africa&apos;s trusted platform for estate-verified service providers
             </p>
           </div>
 

@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Province } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -34,7 +34,7 @@ async function main() {
       slug: 'sandton-gardens',
       address: '123 Rivonia Road',
       city: 'Sandton',
-      province: 'GAUTENG',
+      province: Province.GAUTENG,
       postalCode: '2196',
       description: 'Luxury residential estate in the heart of Sandton with 24/7 security and modern amenities.',
       totalUnits: 250,
@@ -45,7 +45,7 @@ async function main() {
       slug: 'cape-town-heights',
       address: '456 Table Mountain Road',
       city: 'Cape Town',
-      province: 'WESTERN_CAPE',
+      province: Province.WESTERN_CAPE,
       postalCode: '8001',
       description: 'Scenic estate with stunning views of Table Mountain and the Atlantic Ocean.',
       totalUnits: 180,
@@ -56,9 +56,9 @@ async function main() {
       slug: 'durban-beachfront',
       address: '789 Marine Parade',
       city: 'Durban',
-      province: 'KWAZULU_NATAL',
+      province: Province.KWAZULU_NATAL,
       postalCode: '4001',
-      description: 'Modern beachfront complex with direct access to Durban's golden beaches.',
+      description: 'Modern beachfront complex with direct access to Durban\'s golden beaches.',
       totalUnits: 120,
       verified: true,
     },

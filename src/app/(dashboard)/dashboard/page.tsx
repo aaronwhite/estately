@@ -38,7 +38,7 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle>My Estates</CardTitle>
-            <CardDescription>Estates you're registered with</CardDescription>
+            <CardDescription>Estates you&apos;re registered with</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">{user?.estates.length || 0}</div>
@@ -48,7 +48,7 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle>My Reviews</CardTitle>
-            <CardDescription>Reviews you've written</CardDescription>
+            <CardDescription>Reviews you&apos;ve written</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">{user?.reviews.length || 0}</div>
@@ -98,7 +98,7 @@ export default async function DashboardPage() {
               </ul>
             ) : (
               <p className="text-sm text-muted-foreground">
-                You haven't joined any estates yet.
+                You haven&apos;t joined any estates yet.
               </p>
             )}
           </CardContent>

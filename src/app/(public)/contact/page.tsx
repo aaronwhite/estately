@@ -90,13 +90,13 @@ export default function ContactPage() {
         <Card>
           <CardHeader>
             <CardTitle>About Estately</CardTitle>
-            <CardDescription>South Africa's trusted platform for estate services</CardDescription>
+            <CardDescription>South Africa&apos;s trusted platform for estate services</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
               Estately.co.za connects estate residents with verified, trusted service providers.
               All our service providers are estate-verified and neighbor-reviewed, ensuring you get
-              quality service from professionals who understand your community's needs.
+              quality service from professionals who understand your community&apos;s needs.
             </p>
             <div className="mt-4 flex gap-4">
               <Button asChild>

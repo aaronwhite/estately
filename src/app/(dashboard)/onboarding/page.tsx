@@ -32,7 +32,7 @@ export default function OnboardingPage() {
       <Card>
         <CardHeader>
           <CardTitle>Welcome to Estately{user?.firstName ? `, ${user.firstName}` : ''}!</CardTitle>
-          <CardDescription>Let's set up your profile</CardDescription>
+          <CardDescription>Let&apos;s set up your profile</CardDescription>
         </CardHeader>
         <CardContent>
           {step === 1 && (
