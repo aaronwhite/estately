@@ -15,7 +15,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  console.log(process.env)
   return (
     <ClerkProvider>
       <html lang="en">

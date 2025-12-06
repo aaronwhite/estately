@@ -8,7 +8,8 @@
       "Bash(bunx shadcn@latest add:*)",
       "Bash(bunx prisma init:*)",
       "Bash(bunx prisma generate:*)",
-      "Bash([ -f src/lib/prisma.ts ])"
+      "Bash([ -f src/lib/prisma.ts ])",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
