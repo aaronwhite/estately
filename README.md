@@ -5,7 +5,7 @@ South African estate service provider marketplace - connecting estate residents 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8)
-![Prisma](https://img.shields.io/badge/Prisma-7-2d3748)
+![Prisma](https://img.shields.io/badge/Prisma-5-2d3748)
 
 ## 🌟 About
 
@@ -68,7 +68,6 @@ Estately.co.za is a platform designed to solve a common problem faced by estate 
    # Clerk Authentication
    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_..."
    CLERK_SECRET_KEY="sk_test_..."
-   CLERK_WEBHOOK_SECRET="whsec_..."
 
    # Clerk URLs
    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
@@ -122,13 +121,7 @@ The app includes a comprehensive database schema with:
    - Import your GitHub repository
    - Add environment variables in Vercel dashboard
 
-3. **Configure Clerk Webhook**
-   - In Clerk Dashboard → Webhooks
-   - Add endpoint: `https://your-domain.vercel.app/api/webhooks/clerk`
-   - Subscribe to: `user.created`, `user.updated`, `user.deleted`
-   - Add webhook secret to environment variables
-
-4. **Deploy!**
+3. **Deploy!**
 
 ## 📁 Project Structure
 
